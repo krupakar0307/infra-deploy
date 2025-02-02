@@ -1,7 +1,7 @@
 name: terraform checks
 
 on: 
-  push:
+  # push:
     # branches:
     #   - main
     #   - develop

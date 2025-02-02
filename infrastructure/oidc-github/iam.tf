@@ -1,23 +1,23 @@
 
 resource "aws_iam_policy" "lambda_function" {
-    name        = "LambdaFunctionPolicy"
-    description = "Lambda Access Policy"
+  name        = "LambdaFunctionPolicy"
+  description = "Lambda Access Policy"
 
-    policy = jsonencode({
-        Version = "2012-10-17"
-        Statement = [
-            {
-                Effect   = "Allow"
-                Action   = [
-                    "lambda:CreateFunction",
-                    "lambda:UpdateFunctionCode",
-                    "lambda:UpdateFunctionConfiguration",
-                    "lambda:DeleteFunction"
-                ]
-                Resource = "*" #later attach to specific resource with strict policy
-            }
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "lambda:CreateFunction",
+          "lambda:UpdateFunctionCode",
+          "lambda:UpdateFunctionConfiguration",
+          "lambda:DeleteFunction"
         ]
-    })
+        Resource = "*" #later attach to specific resource with strict policy
+      }
+    ]
+  })
 }
 
 # Attaching Inline Policy to the Role to access resources

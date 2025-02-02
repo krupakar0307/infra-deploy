@@ -1,0 +1,52 @@
+name: Lambda & S3 Deployment to Dev environment
+on:
+    workflow_dispatch:
+env:
+    AWS_REGION: ap-south-1
+
+permissions:
+  id-token: write  # This is required for requesting the JWT
+  contents: read   # This is required for actions/checkout
+jobs:
+    terraform-apply:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Set up Terraform
+              uses: hashicorp/setup-terraform@v3
+              with:
+                terraform_version: 1.10.5
+                
+            - name: configure aws auth
+              uses: aws-actions/configure-aws-credentials@v4.0.3
+              with:
+                role-to-assume: arn:aws:iam::288761748973:role/github_oidc_role-dev
+                role-session-name: GitHub_to_AWS_via_FederatedOIDC
+                aws-region: ${{ env.AWS_REGION }}
+  
+            - name: Set up Python
+              uses: actions/setup-python@v4
+              with:
+                python-version: '3.12'
+
+            - name: Install dependencies
+              run: |
+                python -m pip install --upgrade pip
+                pip install -r service/requirements.txt -t service/python/
+
+            - name: Initiating terraform apply
+              env:
+                environment: development
+              run: |
+                cd $GITHUB_WORKSPACE/lambda &&
+                ./ter.sh init ${{env.environment}} 
+                ./ter.sh apply ${{env.environment}}
+            - name: Initiating terraform apply
+              env:
+                environment: development
+              run: |
+                cd $GITHUB_WORKSPACE/s3 &&
+                ./ter.sh init ${{env.environment}} 
+                ./ter.sh apply ${{env.environment}}

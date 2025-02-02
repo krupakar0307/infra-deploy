@@ -7,8 +7,7 @@ on:
             - feature-*
     pull_request:
         branches:
-            - feature-*
-    workflow_dispatch:
+            - feature*
 env:
   AWS_REGION: "ap-south-1"
   ENVIRONMENT: "development"
@@ -40,10 +39,10 @@ jobs:
               env:
                 environment: development
               run: |
-                cd $GITHUB_WORKSPACE/lambda
+                cd $GITHUB_WORKSPACE/infrastructure/lambda
                 echo -e "\033[0;32mRunning terraform init in: $(basename $(pwd))\033[0m"
                 ./ter.sh init ${{env.environment}}
-                cd $GITHUB_WORKSPACE/s3
+                cd $GITHUB_WORKSPACE/infrastructure/s3
                 echo -e "\033[0;32mRunning terraform init in: $(basename $(pwd))\033[0m"
                 ./ter.sh init ${{env.environment}}
 
@@ -70,10 +69,10 @@ jobs:
               env:
                 environment: development
               run: |
-                 cd $GITHUB_WORKSPACE/lambda
+                 cd $GITHUB_WORKSPACE/infrastructure/lambda
                  echo -e "\033[0;32mRunning terraform plan in: $(basename $(pwd))\033[0m"
                  ./ter.sh init ${{env.environment}} && ./ter.sh plan ${{env.environment}}
-                 cd $GITHUB_WORKSPACE/s3
+                 cd $GITHUB_WORKSPACE/infrastructure/s3
                  echo -e "\033[0;32mRunning terraform init in: $(basename $(pwd))\033[0m"
                  ./ter.sh init ${{env.environment}} && ./ter.sh plan ${{env.environment}}
 

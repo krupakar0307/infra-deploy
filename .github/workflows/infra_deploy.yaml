@@ -40,13 +40,13 @@ jobs:
               env:
                 environment: development
               run: |
-                cd $GITHUB_WORKSPACE/lambda &&
+                cd $GITHUB_WORKSPACE/infrastructure/lambda &&
                 ./ter.sh init ${{env.environment}} 
                 ./ter.sh apply ${{env.environment}}
             - name: Initiating terraform apply
               env:
                 environment: development
               run: |
-                cd $GITHUB_WORKSPACE/s3 &&
+                cd $GITHUB_WORKSPACE/infrastructure/s3 &&
                 ./ter.sh init ${{env.environment}} 
                 ./ter.sh apply ${{env.environment}}

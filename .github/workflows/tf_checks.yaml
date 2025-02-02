@@ -1,14 +1,17 @@
 name: terraform checks
 
 on: 
+  workflow_dispatch:
+
   # push:
     # branches:
     #   - main
     #   - develop
     #   # - feature-*
-  pull_request:
+  # pull_request:
     # branches:
     #   - features-*
+    
 
 jobs:
     terraform-lint:

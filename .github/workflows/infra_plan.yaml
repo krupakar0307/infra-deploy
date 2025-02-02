@@ -1,4 +1,4 @@
-name: Lambda Deployment
+name: Infra pre-deploy
 
 on:
     push:

@@ -1,6 +1,6 @@
 output "s3_bucket" {
-  value = aws_s3_bucket.bucket.id
+  value = module.s3_bucket.s3_bucket
 }
 # output "s3_bucket_arn" {
-#   value = aws_s3_bucket.bucket.arn
+#   value = module.s3_bucket.s3_bucket_arn
 # }

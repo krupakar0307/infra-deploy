@@ -9,7 +9,7 @@ variable "bucket_name" {
   #   default     = "your_bucket_name"
 }
 variable "environment" {
-  description = "Environment for the lambda function"
+  description = "Environment for the S3 Bucket"
   type        = string
 
 }

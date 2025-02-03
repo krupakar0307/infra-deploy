@@ -7,20 +7,20 @@ resource "aws_iam_policy" "lambda_function" {
     Version = "2012-10-17"
     Statement = [
       {
-        "Action": [
-            "lambda:CreateFunction",
-            "lambda:UpdateFunctionCode",
-            "lambda:UpdateFunctionConfiguration",
-            "logs:Get*",
-            "logs:Put*",
-            "logs:List*",
-            "logs:Describe*",
-            "cloudwatch:*",
-            "lambda:Get*",
-            "lambda:List*",
-            "iam:Get*",
-            "iam:Put*",
-            "iam:List*"
+        "Action" : [
+          "lambda:CreateFunction",
+          "lambda:UpdateFunctionCode",
+          "lambda:UpdateFunctionConfiguration",
+          "logs:Get*",
+          "logs:Put*",
+          "logs:List*",
+          "logs:Describe*",
+          "cloudwatch:*",
+          "lambda:Get*",
+          "lambda:List*",
+          "iam:Get*",
+          "iam:Put*",
+          "iam:List*"
         ],
         "Effect" : "Allow",
         "Resource" = [

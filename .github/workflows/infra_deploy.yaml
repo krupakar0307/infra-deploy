@@ -1,7 +1,7 @@
 name: Lambda & S3 Deployment to Dev environment
 on:
   workflow_dispatch:
-    
+
   workflow_run:
     workflows: ["Infra pre-deploy"]
     types:
@@ -15,6 +15,7 @@ permissions:
   contents: read   # This is required for actions/checkout
 jobs:
     terraform-apply:
+        if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch' ) && github.event.ref == 'refs/heads/feature2'
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code

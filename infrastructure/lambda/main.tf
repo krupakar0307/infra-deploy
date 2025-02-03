@@ -9,7 +9,7 @@ terraform {
   }
 }
 module "lambda" {
-  aws_region                = "us-west-2"
+  aws_region                = var.aws_region
   environment               = var.environment
   source                    = "../modules/lambda-mod"
   lambda_function_file_path = "${path.module}/../../service"

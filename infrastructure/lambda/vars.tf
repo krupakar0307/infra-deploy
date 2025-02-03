@@ -5,7 +5,7 @@ variable "environment" {
 
 }
 variable "aws_region" {
-  type = string
+  type        = string
   description = "enter region"
-  default = "ap-south-1"
+  default     = "ap-south-1"
 }

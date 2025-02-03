@@ -72,5 +72,6 @@ jobs:
                  echo -e "\033[0;32mRunning terraform plan in: $(basename $(pwd))\033[0m"
                  ./ter.sh init ${{env.environment}} && ./ter.sh plan ${{env.environment}}
                  cd $GITHUB_WORKSPACE/infrastructure/s3
+                 sleep 100
                  echo -e "\033[0;32mRunning terraform init in: $(basename $(pwd))\033[0m"
                  ./ter.sh init ${{env.environment}} && ./ter.sh plan ${{env.environment}}

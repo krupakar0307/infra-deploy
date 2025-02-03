@@ -56,7 +56,9 @@ resource "aws_iam_policy" "s3_bucket_policy" {
       {
         Effect = "Allow"
         Action = [
-          "s3:CreateBucket"
+          "s3:CreateBucket",
+          "s3:ListBucket",
+          "s3:HeadBucket"
         ]
         Resource = "*"
       }

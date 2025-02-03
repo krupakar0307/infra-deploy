@@ -22,6 +22,8 @@ terraform {
     bucket = "krupakaryasa"
     key     = "${STATE_KEY}"
     region  = "ap-south-1"
+    encrypt = "true"
+    use_locfile = "true"
   }
 }
 EOT

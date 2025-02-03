@@ -18,6 +18,7 @@ resource "aws_iam_policy" "lambda_function" {
           "cloudwatch:*",
           "lambda:Get*",
           "lambda:List*",
+          "lambda:Tag*",
           "iam:Get*",
           "iam:Put*",
           "iam:List*"

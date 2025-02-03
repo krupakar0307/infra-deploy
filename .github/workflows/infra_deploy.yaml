@@ -1,9 +1,11 @@
 name: Lambda & S3 Deployment to Dev environment
 on:
-    workflow_run:
-      workflows: ["Infra pre-deploy"]
-      types:
-        - completed
+  workflow_run:
+    workflows: ["Infra pre-deploy"]
+    types:
+      - completed
+on:
+    workflow_dispatch:
 env:
     AWS_REGION: ap-south-1
 

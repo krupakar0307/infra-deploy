@@ -13,8 +13,8 @@ provider "aws" {
 ## configure backend for state configuration
 terraform {
   backend "s3" {
-    bucket = "krupakaryasa"
-    key    = "OIDC-github/terraform.tfstate"
+    bucket = ""
+    key    = ""
     region = "ap-south-1"
   }
 }

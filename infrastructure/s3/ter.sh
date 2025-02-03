@@ -22,7 +22,6 @@ terraform {
     bucket = "krupakaryasa"
     key     = "${STATE_KEY}"
     region  = "ap-south-1"
-    use_lockfile = "true"
   }
 }
 EOT

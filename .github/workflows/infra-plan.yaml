@@ -90,7 +90,7 @@ jobs:
           uses: trstringer/manual-approval@v1
           with:
             secret: ${{ github.TOKEN }}
-            approvers: username1, username2 #add the usernames of the users who can approve the deployment
+            approvers: krupakar0307 #add the usernames of the users who can approve the deployment
             minimum-approvals: 1 #specify the number of approvals needed
             issue-title: "Deploying ${{ github.ref_name }} to prod from staging"
             issue-body: "Please approve or deny the deployment."

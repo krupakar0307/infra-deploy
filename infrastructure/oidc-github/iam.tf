@@ -7,22 +7,26 @@ resource "aws_iam_policy" "lambda_function" {
     Version = "2012-10-17"
     Statement = [
       {
-        Effect = "Allow"
-        Action = [
+        "Action" : [
           "lambda:CreateFunction",
           "lambda:UpdateFunctionCode",
           "lambda:UpdateFunctionConfiguration",
-          "iam:GetRole",
-          "logs:DescribeLogGroups"
-        ]
-        Resource = [
-          "arn:aws:lambda:${var.aws_region}:${data.aws_caller_identity.current.account_id}:function:*"
+          "logs:*",
+          "cloudwatch:*",
+          "lambda:Get*",
+          "iam:*"
+        ],
+        "Effect" : "Allow",
+        "Resource" = [
+          "arn:aws:lambda:${var.aws_region}:${data.aws_caller_identity.current.account_id}:function:*",
+          "arn:aws:logs:${var.aws_region}:${data.aws_caller_identity.current.account_id}:log-group:*",
+          "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/*",
+          "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/*"
         ]
       }
-    ]
+    ],
   })
 }
-
 # Attaching Inline Policy to the Role to access resources
 resource "aws_iam_role_policy_attachment" "eks_auth_policy_attachment" {
   role       = aws_iam_role.github_oidc_role.name
@@ -39,28 +43,27 @@ resource "aws_iam_policy" "s3_bucket_policy" {
     Statement = [
       # Read/Write access to the statefile bucket
       {
-        Effect = "Allow"
-        Action = [
+        "Action" : [
           "s3:ListBucket",
           "s3:GetObject",
           "s3:PutObject",
-          "s3:DeleteObject",
-          "s3:HeadBucket"
+          "s3:DeleteObject"
+        ],
+        "Effect" : "Allow",
+        "Resource" : [
+          "arn:aws:s3:::krupakaryasa",
+          "arn:aws:s3:::krupakaryasa/*"
         ]
-        Resource = [
-          "arn:aws:s3:::krupakaryasa",         
-          "arn:aws:s3:::krupakaryasa/*"      
-        ] #statefile bucket arn
       },
-      # Permission to create new S3 buckets
       {
-        Effect = "Allow"
-        Action = [
+        "Action" : [
           "s3:CreateBucket",
           "s3:ListBucket",
-          "s3:HeadBucket"
-        ]
-        Resource = "*"
+          "s3:Get*",
+          "s3:Put*"
+        ],
+        "Effect" : "Allow",
+        "Resource" : "*"
       }
     ]
   })

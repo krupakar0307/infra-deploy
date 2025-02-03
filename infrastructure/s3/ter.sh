@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 # Check if environment and action are provided
 if [ -z "$1" ] || [ -z "$2" ]; then

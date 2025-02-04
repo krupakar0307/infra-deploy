@@ -1,5 +1,4 @@
 name: Infra pre-deploy
-
 on:
     push:
         branches:
@@ -10,6 +9,7 @@ on:
 env:
   AWS_REGION: "ap-south-1"
   ENVIRONMENT: "development"
+  GITHUB_ROLE_ARN: "arn:aws:iam::288761748973:role/github_oidc_role-dev"
 
 permissions:
   id-token: write  # This is required for requesting the JWT
@@ -30,7 +30,7 @@ jobs:
             - name: configure aws auth
               uses: aws-actions/configure-aws-credentials@v4.0.3
               with:
-                role-to-assume: arn:aws:iam::288761748973:role/github_oidc_role-dev
+                role-to-assume: ${{ env.GITHUB_ROLE_ARN }}
                 role-session-name: GitHub_to_AWS_via_FederatedOIDC
                 aws-region: ${{ env.AWS_REGION }}
 
@@ -74,6 +74,3 @@ jobs:
                  cd $GITHUB_WORKSPACE/infrastructure/s3
                  echo -e "\033[0;32mRunning terraform init in: $(basename $(pwd))\033[0m"
                  ./ter.sh init ${{env.environment}} && ./ter.sh plan ${{env.environment}}
-
-
-  

@@ -3,14 +3,8 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "bucket" {
-  bucket = var.bucket_name
-  tags_all = {
-    Name        = var.bucket_name
-    Environment = var.environment
-
-    managed_by = "terraform"
-    terraform  = "true"
-  }
+  bucket   = "${var.bucket_name}-${var.environment}"
+  tags_all = var.tags_all
 }
 
 resource "aws_s3_bucket_public_access_block" "bucket" {

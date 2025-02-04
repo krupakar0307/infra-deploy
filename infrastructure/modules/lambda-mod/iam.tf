@@ -51,6 +51,7 @@ resource "aws_iam_policy" "bedrock_policy" {
       }
     ]
   })
+  tags_all = var.tags_all
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
@@ -77,6 +78,7 @@ resource "aws_iam_policy" "lambda_s3_policy" {
       }
     ]
   })
+  tags_all = var.tags_all
 }
 
 resource "aws_iam_role_policy_attachment" "s3_policy_attachment" {

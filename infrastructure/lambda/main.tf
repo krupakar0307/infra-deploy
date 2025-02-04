@@ -9,7 +9,7 @@ terraform {
   }
 }
 module "lambda" {
-  aws_region                = "us-west-2"
+  aws_region                = var.aws_region
   environment               = var.environment
   source                    = "../modules/lambda-mod"
   lambda_function_file_path = "${path.module}/../../service"
@@ -22,4 +22,5 @@ module "lambda" {
   #     "BEDROCK_RESOURCE_ARN" = var.bedrock_resource_arn
   #     "S3_RESOURCE_ARN" = var.s3_resource_arn
   # }
+  tags_all = var.tags_all
 }

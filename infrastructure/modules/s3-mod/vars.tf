@@ -13,3 +13,13 @@ variable "environment" {
   type        = string
 
 }
+variable "tags_all" {
+  description = "set tags"
+  type        = map(string)
+  default = {
+    Environment = ""
+    managed_by  = "terraform"
+    terraform   = "true"
+    Project     = "Expense-Tracker-LLM"
+  }
+}

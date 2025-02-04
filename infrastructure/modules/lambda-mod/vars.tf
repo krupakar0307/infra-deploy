@@ -7,6 +7,11 @@ variable "environment_variables" {
   type        = map(string)
   default     = {}
 }
+variable "environment" {
+  default     = ""
+  description = "add environment"
+  type        = string
+}
 variable "lambda_function_name" {
   description = "Name of the lambda function"
   type        = string
@@ -26,11 +31,6 @@ variable "runtime" {
   description = "Runtime for the lambda function"
   type        = string
   default     = "python3.12"
-}
-variable "environment" {
-  description = "Environment for the lambda function"
-  type        = string
-  # default     = "dev"
 }
 ##bedrock resource arn
 variable "create_bedrock_policy" {
@@ -66,3 +66,13 @@ variable "s3_bucket_arn" {
   }
 }
 
+variable "tags_all" {
+  description = "set tags"
+  type        = map(string)
+  default = {
+    Environment = ""
+    managed_by  = "terraform"
+    terraform   = "true"
+    Project     = "Expense-Tracker-LLM"
+  }
+}

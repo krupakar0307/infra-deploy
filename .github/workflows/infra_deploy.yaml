@@ -1,14 +1,17 @@
 name: Lambda & S3 Deployment to Dev environment
 on:
-    workflow_dispatch:
+  workflow_dispatch:
+
 env:
     AWS_REGION: ap-south-1
+    GITHUB_ROLE_ARN: "arn:aws:iam::288761748973:role/github_oidc_role-dev"
 
 permissions:
   id-token: write  # This is required for requesting the JWT
   contents: read   # This is required for actions/checkout
 jobs:
     terraform-apply:
+        if: github.event.ref == 'refs/heads/main'
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
@@ -22,7 +25,7 @@ jobs:
             - name: configure aws auth
               uses: aws-actions/configure-aws-credentials@v4.0.3
               with:
-                role-to-assume: arn:aws:iam::288761748973:role/github_oidc_role-dev
+                role-to-assume: ${{ env.GITHUB_ROLE_ARN }}
                 role-session-name: GitHub_to_AWS_via_FederatedOIDC
                 aws-region: ${{ env.AWS_REGION }}
   

@@ -13,9 +13,11 @@ provider "aws" {
 ## configure backend for state configuration
 terraform {
   backend "s3" {
-    bucket = ""
-    key    = ""
-    region = "ap-south-1"
+    bucket       = "expense-tracker-llm-s3-backend"
+    key          = "oidc-github/terraform.state"
+    region       = "us-east-1"
+    encrypt      = true
+    use_lockfile = true
   }
 }
 
@@ -23,6 +25,7 @@ terraform {
 resource "aws_iam_openid_connect_provider" "github" {
   url            = var.url
   client_id_list = ["sts.amazonaws.com"]
+  tags_all       = var.tags_all
 }
 
 ## create IAM role
@@ -44,11 +47,15 @@ resource "aws_iam_role" "github_oidc_role" {
             "token.actions.githubusercontent.com:aud" : "sts.amazonaws.com"
           }
           StringLike = {
-            "token.actions.githubusercontent.com:sub" : "repo:${var.github_organization}/${var.repo != "" ? var.repo : "*"}:ref:refs/heads/${var.branch != "" ? var.branch : "*"}"
+            "token.actions.githubusercontent.com:sub" : [
+              "repo:${var.github_organization}/${var.repo != "" ? var.repo : "*"}:ref:refs/heads/${var.branch != "" ? var.branch : "*"}",
+              "repo:${var.github_organization}/${var.repo != "" ? var.repo : "*"}:pull_request"
+            ]
           }
 
         }
       }
     ]
   })
+  tags_all = var.tags_all
 }

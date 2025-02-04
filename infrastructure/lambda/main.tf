@@ -22,4 +22,5 @@ module "lambda" {
   #     "BEDROCK_RESOURCE_ARN" = var.bedrock_resource_arn
   #     "S3_RESOURCE_ARN" = var.s3_resource_arn
   # }
+  tags_all = var.tags_all
 }

@@ -1,6 +1,6 @@
 variable "aws_region" {
   description = "Provide AWS Region to create resources"
-  default     = "ap-south-1"
+  default     = "us-east-1"
   type        = string
 }
 variable "url" {
@@ -11,12 +11,18 @@ variable "url" {
 
 variable "role_name" {
   description = "Role that is attached to OIDC"
-  default     = "github_oidc_role-dev"
+  default     = "github_oidc_role_expensive-tracker"
   type        = string
+}
+
+variable "s3_backend_bucket" {
+  type        = string
+  description = "configure backend bucket for terraform state store"
+  default     = "expense-tracker-llm-s3-backend"
 }
 variable "github_organization" {
   description = "Enter github organization name for accessing to aws"
-  default     = "krupakar0307"
+  default     = "Debuide"
   type        = string
 }
 
@@ -24,13 +30,24 @@ variable "github_organization" {
 # If the branch is not provided, it will allow access to all branches.
 variable "repo" {
   description = "Enter github repo name to restrict access for specific repo"
-  default     = ""
+  default     = "expense-tracker"
   type        = string
 }
 variable "branch" {
   description = "enter the branch name to run ci/cd actions"
   default     = ""
   type        = string
+}
+
+variable "tags_all" {
+  description = "set tags"
+  type        = map(string)
+  default = {
+    Environment = "stg"
+    managed_by  = "terraform"
+    terraform   = "true"
+    Project     = "Expense-Tracker-LLM"
+  }
 }
 
 

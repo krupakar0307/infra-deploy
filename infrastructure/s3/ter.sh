@@ -1,58 +1,60 @@
 #!/bin/bash
 set -euo pipefail
 
-# Check if environment and action are provided
-if [ -z "$1" ] || [ -z "$2" ]; then
-    echo "Please provide action (init/plan/apply/destroy) and environment (dev/staging/prod)."
+# terrafrm action and environment are provided
+if [ "$#" -lt 2 ]; then
+    echo "Usage: $0 <init|plan|apply|destroy> <environment>"
     exit 1
 fi
 
-# Variables for action and environment
 ACTION=$1
 ENVIRONMENT=$2
-WORKSPACE=$(terraform workspace show)
-FOLDER_NAME=$(basename "$PWD")  # Get the current directory name as folder/module name
-BUCKET="krupakaryasa"
-# Generate the state key using folder name and workspace
-STATE_KEY="${ENVIRONMENT}/${FOLDER_NAME}/${WORKSPACE}/terraform.tfstate"
+REGION="us-east-1"
+FOLDER_NAME=$(basename "$PWD")  # Module name as folder name
+BUCKET="expense-tracker-llm-s3-backend"
+STATE_KEY="${FOLDER_NAME}/terraform.tfstate"  # No ENVIRONMENT here, workspace handles s3 path!
 
-# Generate the backend.tf file
+# generate backend.tf file
 cat > backend.tf <<EOT
 terraform {
   backend "s3" {
-    bucket = "krupakaryasa"
+    bucket = "${BUCKET}"
     key     = "${STATE_KEY}"
-    region  = "ap-south-1"
+    region  = "${REGION}"
     encrypt = "true"
-    use_locfile = "true"
+    use_lockfile = "true"
   }
 }
 EOT
 
-# Run the Terraform init command to configure backend
+# cleanup of backend.tf on exit
+trap 'rm -f backend.tf' EXIT
+
+# Initialize Terraform
 if [ "$ACTION" == "init" ]; then
-    terraform init -backend-config="bucket=${BUCKET}" -backend-config="key=${STATE_KEY}" -backend-config="region=ap-south-1" -reconfigure
-    
+    terraform init -reconfigure 
+
+    # if workspace exists and select it
+    if ! terraform workspace list | grep -wq "$ENVIRONMENT"; then
+        terraform workspace new "$ENVIRONMENT"
+    fi
+    terraform workspace select "$ENVIRONMENT"
+
 elif [ "$ACTION" == "plan" ]; then
-    terraform plan -var="environment=${ENVIRONMENT}"
-    
+    terraform workspace select "$ENVIRONMENT"
+    terraform plan
+
 elif [ "$ACTION" == "apply" ]; then
-    terraform apply -auto-approve -var="environment=${ENVIRONMENT}"
-    
+    terraform workspace select "$ENVIRONMENT"
+    terraform apply -auto-approve
+
 elif [ "$ACTION" == "destroy" ]; then
-    # Preview the resources to be destroyed without generating tfplan file
-    echo "Previewing resources to be destroyed..."
-    terraform plan -destroy -var="environment=${ENVIRONMENT}"
-    # Check the exit code from terraform destroy command
+    terraform workspace select "$ENVIRONMENT"
+    terraform plan -destroy
     sleep 50
-    # Automatically approve destruction without prompt
-    echo "Destroying resources..."
-    terraform destroy -auto-approve -var="environment=${ENVIRONMENT}"
-    
+    terraform destroy -auto-approve
+
 else
-    echo "Invalid action. Please provide init/plan/apply/destroy."
+    echo "Invalid action. Use: init, plan, apply, or destroy."
     exit 1
 fi
-
-# Clean up backend.tf file
-rm backend.tf

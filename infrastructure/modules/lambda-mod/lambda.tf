@@ -26,12 +26,7 @@ resource "aws_lambda_function" "this" {
     aws_iam_policy.lambda_logging,
     aws_cloudwatch_log_group.this,
   ]
-  tags_all = {
-    Name        = "${var.lambda_function_name}-${var.environment}"
-    Environment = var.environment
-    managed_by  = "terraform"
-    terraform   = "true"
-  }
+  tags_all = var.tags_all
 }
 resource "aws_lambda_function_url" "this" {
   function_name      = aws_lambda_function.this.function_name
@@ -43,12 +38,14 @@ resource "aws_lambda_function_url" "this" {
 resource "aws_iam_role" "iam_for_lambda" {
   name               = "${var.lambda_function_name}-role-${var.environment}"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
+  tags_all           = var.tags_all
 }
 
 ## cloudwatch logging configuration
 resource "aws_cloudwatch_log_group" "this" {
   name              = "/aws/lambda/${var.lambda_function_name}-${var.environment}"
   retention_in_days = 14
+  tags_all          = var.tags_all
 }
 
 resource "aws_iam_policy" "lambda_logging" {
@@ -56,6 +53,7 @@ resource "aws_iam_policy" "lambda_logging" {
   #   path        = "/"
   description = "IAM policy for logging from a lambda"
   policy      = data.aws_iam_policy_document.lambda_logging.json
+  tags_all    = var.tags_all
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_logs" {

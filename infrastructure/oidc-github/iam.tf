@@ -40,7 +40,7 @@ resource "aws_iam_role_policy_attachment" "eks_auth_policy_attachment" {
   policy_arn = aws_iam_policy.lambda_function.arn
 }
 
-# S3 bucket policy to create bucket.
+# S3 bucket policy allows terraform to read/write state files and only create new S3 buckets
 resource "aws_iam_policy" "s3_bucket_policy" {
   name        = "S3BucketPolicy"
   description = "allows terraform to read/write state files and only create new S3 buckets"
@@ -58,8 +58,8 @@ resource "aws_iam_policy" "s3_bucket_policy" {
         ],
         "Effect" : "Allow",
         "Resource" : [
-          "arn:aws:s3:::krupakaryasa",
-          "arn:aws:s3:::krupakaryasa/*"
+          "arn:aws:s3:::${var.s3_backend_bucket}",
+          "arn:aws:s3:::${var.s3_backend_bucket}/*" ## only to read and write terraform state in s3 backend bucket.
         ]
       },
       {
@@ -74,6 +74,7 @@ resource "aws_iam_policy" "s3_bucket_policy" {
       }
     ]
   })
+  tags_all = var.tags_all
 }
 
 resource "aws_iam_role_policy_attachment" "s3_bucket_policy_attachment" {

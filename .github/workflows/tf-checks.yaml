@@ -88,4 +88,4 @@ jobs:
             - name: tfsec
               uses: aquasecurity/tfsec-action@v1.0.0
               with:
-                 args: ". -m CRITICAL && tfsec . --run-statistics"
+                 args: "--run-statistics"

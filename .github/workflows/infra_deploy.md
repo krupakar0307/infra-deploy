@@ -121,7 +121,9 @@ jobs:
 
         - name: Install dependencies
           run: |
+              ls -al
               cd $GITHUB_WORKSPACE
+              ls -al
               python -m pip install --upgrade pip
               pip install -r service/requirements.txt -t service/python/
 

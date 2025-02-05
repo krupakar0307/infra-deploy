@@ -88,4 +88,4 @@ jobs:
             - name: tfsec
               uses: aquasecurity/tfsec-action@v1.0.0
               with:
-                additional_args: "--run-statistics"
+                additional_args: "--run-statistics --format=json"

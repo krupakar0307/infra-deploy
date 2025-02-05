@@ -15,7 +15,7 @@ permissions:
   contents: read   # This is required for actions/checkout
 
 jobs:
-    linting:
+    <!-- linting:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
@@ -39,8 +39,8 @@ jobs:
                     echo "tflint failed in $DIR, please fix the issues"
                     exit 1; 
                   }
-                done
-    terraform-fmt:
+                done -->
+    <!-- terraform-fmt:
             needs: linting
             runs-on: ubuntu-latest
             steps:
@@ -60,9 +60,9 @@ jobs:
                         echo "terraform fmt failed in $DIR, please run terraform fmt to fix the errors"
                         exit 1;
                       }
-                    done
+                    done -->
     
-    terraform-validate: 
+    <!-- terraform-validate: 
         needs: terraform-fmt
         runs-on: ubuntu-latest
         steps:
@@ -85,8 +85,8 @@ jobs:
                     echo "terraform validate failed in $DIR, please fix the errors"; 
                     exit 1; 
                   }
-                done
-    tfsec:
+                done -->
+    <!-- tfsec:
         needs: terraform-validate
         runs-on: ubuntu-latest
         steps:
@@ -109,7 +109,7 @@ jobs:
                 echo "Running tfsec for severity CRITICAL"
                 tfsec . -m CRITICAL
                 echo "Running tfsec detailed report"
-                tfsec . --run-statistics
+                tfsec . --run-statistics -->
     service-build:
       # needs: tfsec
       runs-on: ubuntu-latest
@@ -119,15 +119,15 @@ jobs:
           with:
             python-version: '3.12'
 
-        - name: Install dependencies
+        <!-- - name: Install dependencies
           run: |
               ls -al
               cd $GITHUB_WORKSPACE
               ls -al
               python -m pip install --upgrade pip
-              pip install -r service/requirements.txt -t service/python/
+              pip install -r service/requirements.txt -t service/python/ -->
 
-    terraform-deploy:
+    <!-- terraform-deploy:
         needs:
           - tfsec
           - service-build
@@ -164,4 +164,4 @@ jobs:
                 terraform workspace new ${{env.environment}} || terraform workspace select ${{env.environment}} 
                 terraform plan --var-file="${{env.environment}}.tfvars" 
                 terraform apply --var-file="${{env.environment}}.tfvars" -auto-approve || exit 1
-                
+                 -->

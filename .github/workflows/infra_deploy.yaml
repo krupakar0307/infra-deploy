@@ -2,9 +2,9 @@ name: terraform build and deployment
 
 on: 
   push:
-    branches:
-      - main
-      - feature*
+    # branches:
+    #   - main
+    #   - feature*
   pull_request:
 
 env:

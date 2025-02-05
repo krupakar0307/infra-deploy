@@ -88,4 +88,6 @@ jobs:
             - name: tfsec
               uses: aquasecurity/tfsec-action@v1.0.0
               with:
-                additional_args: "-m	CRITICAL"
+                additional_args: 
+                 - "-m	CRITICAL" 
+                 - "--run-statistics --format=markdown"

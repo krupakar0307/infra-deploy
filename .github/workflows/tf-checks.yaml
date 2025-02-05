@@ -114,6 +114,9 @@ jobs:
       # needs: tfsec
       runs-on: ubuntu-latest
       steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+
         - name: Set up Python
           uses: actions/setup-python@v4
           with:
@@ -121,6 +124,7 @@ jobs:
 
         - name: Install dependencies
           run: |
+              ls
               cd $GITHUB_WORKSPACE
               python -m pip install --upgrade pip
               pip install -r service/requirements.txt -t service/python/

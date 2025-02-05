@@ -159,16 +159,16 @@ jobs:
               env:
                 environment: stg
               run: |
-                cd $GITHUB_WORKSPACE/infrastructure/lambda
-                echo -e "\033[0;32mRunning terraform init in: $(basename $(pwd))\033[0m"
-                terraform init -reconfigure
-                terraform workspace new ${{env.environment}} || terraform workspace select ${{env.environment}} 
-                terraform plan --var-file="${{env.environment}}.tfvars" 
+                # cd $GITHUB_WORKSPACE/infrastructure/lambda
+                # echo -e "\033[0;32mRunning terraform init in: $(basename $(pwd))\033[0m"
+                # terraform init -reconfigure
+                # terraform workspace new ${{env.environment}} || terraform workspace select ${{env.environment}} 
+                # terraform plan
                 # terraform apply --var-file="${{env.environment}}.tfvars" -auto-approve || exit 1
                 cd $GITHUB_WORKSPACE/infrastructure/s3
                 terraform init -reconfigure
                 terraform workspace new ${{env.environment}} || terraform workspace select ${{env.environment}} 
-                terraform plan --var-file="${{env.environment}}.tfvars" 
+                terraform plan 
                 # terraform apply --var-file="${{env.environment}}.tfvars" -auto-approve || exit 1
                 sleep 10
                 echo "Running your resources view..,"

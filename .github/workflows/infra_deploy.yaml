@@ -9,7 +9,7 @@ on:
 
 env:
   AWS_REGION: "us-east-1"
-  GITHUB_ROLE_ARN: "arn:aws:iam::342914800082:role/github_oidc_role_expensive-tracker"
+  GITHUB_ROLE_ARN: "arn:aws:iam::288761748973:role/github_oidc_role-dev"
 
 permissions:
   id-token: write  # This is required for requesting the JWT

@@ -87,8 +87,5 @@ jobs:
               uses: actions/checkout@v4
             - name: tfsec
               uses: aquasecurity/tfsec-action@v1.0.0
-              run: |
-                echo "Running tfsec for severity CRITICAL"
-                tfsec . -m CRITICAL
-                echo "Running tfsec detailed report"
-                tfsec . --run-statistics
+              with:
+                 args: ". -m CRITICAL && tfsec . --run-statistics"

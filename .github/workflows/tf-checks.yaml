@@ -16,11 +16,12 @@ permissions:
   contents: read   # This is required for actions/checkout
 
 jobs:
-    call-workflow:
+    notify-build-start:
       uses: krupakar0307/infra-deploy/.github/workflows/slack.yml@set-cache
       with:
-            status: "In Progress"
-            custom-message: "SAM Build has started."
+        status: "In Progress"
+        custom-message: "SAM Build has started."
+      
     sam-build:
       runs-on: ubuntu-latest
       steps:

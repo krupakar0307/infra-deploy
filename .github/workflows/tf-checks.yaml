@@ -32,7 +32,9 @@ jobs:
         - name: setup sam
           uses: aws-actions/setup-sam@v2
         - run: |
-            cd $GITHUB_WORKSPACE/infra-deploy/sam-app-init
+            ls -R
+            cd $GITHUB_WORKSPACE/
+            ls -al
             sam build --use-container
             # echo -e "\033[0;32mDeploying SAM ... \033[0m"
             # sam deploy --no-confirm-changeset --no-fail-on-empty-changeset

@@ -23,12 +23,6 @@ jobs:
           uses: actions/checkout@v4
         - name: Set up Python
           uses: actions/setup-python@v4
-        # - name: configure aws auth
-        #   uses: aws-actions/configure-aws-credentials@v4.0.3
-        #   with:
-        #     role-to-assume: ${{ env.GITHUB_ROLE_ARN }}
-        #     role-session-name: GitHub_to_AWS_via_FederatedOIDC
-        #     aws-region: ${{ env.AWS_REGION }}
         - name: setup sam
           uses: aws-actions/setup-sam@v2
         - run: |
@@ -36,8 +30,33 @@ jobs:
             cd $GITHUB_WORKSPACE/sam-app-init
             # ls -al
             sam build --use-container
-            # echo -e "\033[0;32mDeploying SAM ... \033[0m"
-            # sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
-      
+        - name: store the build cache
+          uses: actions/cache@v3
+          with:
+            path: ${{ github.workspace }}/sam-app-init/.aws-sam
+            key: sam-cache-${{ github.sha }}
+
+    sam-invoke:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+        - name: Set up Python
+          uses: actions/setup-python@v4
+        - name: setup sam
+          uses: aws-actions/setup-sam@v2
+        - name: Restore .aws-sam cache
+          uses: actions/cache@v3
+          with:
+            path: ${{ github.workspace }}/sam-app-init/.aws-sam
+            key: sam-cache-${{ github.sha }}
+            restore-keys: |
+              sam-cache-
+        - run: |
+            # ls -R
+            cd $GITHUB_WORKSPACE/sam-app-init
+            ls -R
+            sam local invole
+        
 
 

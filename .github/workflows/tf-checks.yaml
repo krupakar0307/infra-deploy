@@ -16,6 +16,8 @@ env:
 #   contents: read   # This is required for actions/checkout
 
 jobs:
+    call-workflow:
+      uses: krupakar0307/infra-deploy/.github/workflows/slack.yml@set-cache
     sam-build:
       runs-on: ubuntu-latest
       steps:

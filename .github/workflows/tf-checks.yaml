@@ -11,9 +11,9 @@ env:
   AWS_REGION: "us-east-1"
   GITHUB_ROLE_ARN: "arn:aws:iam::342914800082:role/github_oidc_role_expensive-tracker"
 
-# permissions:
-#   id-token: write  # This is required for requesting the JWT
-#   contents: read   # This is required for actions/checkout
+permissions:
+  id-token: write  # This is required for requesting the JWT
+  contents: read   # This is required for actions/checkout
 
 jobs:
     call-workflow:
@@ -23,14 +23,14 @@ jobs:
       steps:
         - name: Checkout repository
           uses: actions/checkout@v4
-        - name: Notify Build Start
+          
+        - name: Set up Python
+          uses: actions/setup-python@v4
+        - name: notify-slack
           uses: krupakar0307/infra-deploy/.github/workflows/slack.yml@set-cache
           with:
             status: "In Progress"
             custom-message: "SAM Build has started."
-        - name: Set up Python
-          uses: actions/setup-python@v4
-      
         - name: setup sam
           uses: aws-actions/setup-sam@v2
         - run: |

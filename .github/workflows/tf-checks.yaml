@@ -25,7 +25,7 @@ jobs:
           uses: actions/setup-python@v4
       
         - name: Notify Build Start
-          uses: ./.github/workflows/notify-slack.yml
+          uses: ./.github/workflows/slack.yml
           with:
             status: "In Progress"
             custom-message: "SAM Build has started."

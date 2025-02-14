@@ -15,14 +15,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Notify Slack on success
-        if: success()
-        uses: slackapi/slack-github-action@v1.23.0
-        
+      - name: Flatten the default GitHub payload
+        uses: slackapi/slack-github-action@v2.0.0
         with:
-            # webhook-type: webhook-trigger
+            payload-delimiter: "_"
             webhook: "https://hooks.slack.com/services/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"
-            # webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+            webhook-type: webhook-trigger
             payload: |
                 {
                 "channel": "#github-actions-workflows",

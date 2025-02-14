@@ -1,9 +1,14 @@
 name: Slack Notification
 
 on:
-  push:
-    branches:
-      - set-*
+  workflow_call:
+    inputs:
+      status:
+        required: true
+        type: string
+      message:
+        required: false
+        type: string
 
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

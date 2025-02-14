@@ -73,7 +73,7 @@ jobs:
             # ls -R
             cd $GITHUB_WORKSPACE/sam-app-init
             ls -R
-            sam local invoke
+            sam local invoe
 
         - name: Notify build failure
           if: failure()

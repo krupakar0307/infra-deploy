@@ -18,8 +18,8 @@ jobs:
         uses: act10ns/slack@v1
         with:
           webhook-url: ${{ env.SLACK_WEBHOOK_URL }}
-          status: ${{ job.status }}
-          channel: '@github-actions-workflows'
+          status: in progress
+          channel: '#general'
       
 
      

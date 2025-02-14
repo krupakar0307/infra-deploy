@@ -14,14 +14,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Greet the reader
-        uses: slackapi/slack-github-action@v2.0.0
+      - name: Slack Notifications
+        uses: act10ns/slack@v1
         with:
-            webhook: ${{ env.SLACK_WEBHOOK_URL }}
-            webhook-type: incoming-webhook
-            payload: |
-                text: "Greetings!"
-        env:
-            SLACK_CHANNEL_ID: "#general"
+          webhook-url: ${{ env.SLACK_WEBHOOK_URL }}
+          status: ${{ job.status }}
+          channel: '@github-actions-workflows'
+      
 
      

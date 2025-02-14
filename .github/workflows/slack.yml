@@ -20,13 +20,14 @@ jobs:
           webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
           webhook-type: incoming-webhook
           payload: |
-            text: "Build started :eyes:"
+            text: "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
             attachments:
               - color: "dbab09"
                 fields:
                   - title: "Status"
                     short: true
-                    value: "In Progress"
+                    value: ${{ job.status }}
+                  
       - name: run some commands
         run: |
           echo "Hello, world!"
@@ -44,5 +45,6 @@ jobs:
                 fields:
                   - title: "Status"
                     short: true
-                    value: "Failed"
+                    value: ${{ job.status }}
+
         

@@ -33,7 +33,7 @@ jobs:
           uses: aws-actions/setup-sam@v2
         - run: |
             ls -R
-            cd $GITHUB_WORKSPACE/
+            cd $GITHUB_WORKSPACE/infra-deploy/sam-app-init
             ls -al
             sam build --use-container
             # echo -e "\033[0;32mDeploying SAM ... \033[0m"

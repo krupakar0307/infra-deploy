@@ -56,7 +56,7 @@ jobs:
             # ls -R
             cd $GITHUB_WORKSPACE/sam-app-init
             ls -R
-            sam local invole
+            sam local invoke
         
 
 

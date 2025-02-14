@@ -33,7 +33,7 @@ jobs:
         run: |
           echo "Hello, world!"
           echo "The time is $(date)."
-          sleep 30
+          seep 30
 
       - name: Notify build success
         if: success()

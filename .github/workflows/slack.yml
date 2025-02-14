@@ -23,7 +23,7 @@ jobs:
           payload: |
             text: |
               :hourglass_flowing_sand: GitHub Action build starts: In Progress
-              Repository: <${{ github.repository }}>
+              Repository: *${{ github.repository }}*
               Commit: <${{ github.event.head_commit.url }}|${{ github.event.head_commit.message }}>
               Author: ${{ github.event.head_commit.author.name }}
               Branch: <https://github.com/${{ github.repository }}/tree/${{ github.ref }}|${{ github.ref }}>
@@ -43,11 +43,11 @@ jobs:
           webhook-type: incoming-webhook
           payload: |
             text: |
-                :tada: *GitHub Action build succeeded* :tada:
-                Repository: <${{ github.repository }}>
-                Commit: <${{ github.event.head_commit.url }}|${{ github.event.head_commit.message }}>
-                Author: ${{ github.event.head_commit.author.name }}
-                Branch: <https://github.com/${{ github.repository }}/tree/${{ github.ref }}|${{ github.ref }}>
+              :tada: *GitHub Action build succeeded* :tada:
+              Repository: *${{ github.repository }}*
+              Commit: <${{ github.event.head_commit.url }}|${{ github.event.head_commit.message }}>
+              Author: ${{ github.event.head_commit.author.name }}
+              Branch: <https://github.com/${{ github.repository }}/tree/${{ github.ref }}|${{ github.ref }}>
               URL: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}
 
       - name: Notify build failure
@@ -59,9 +59,8 @@ jobs:
           payload: |
             text: |
               :x: *GitHub Action build failed* :x:
-              Repository: <${{ github.repository }}>
+              Repository: *<${{ github.repository }}>* 
               Commit: <${{ github.event.head_commit.url }}|${{ github.event.head_commit.message }}>
               Author: ${{ github.event.head_commit.author.name }}
               Branch: <https://github.com/${{ github.repository }}/tree/${{ github.ref }}|${{ github.ref }}>
               URL: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}
-              Error Logs: ${{ steps.run_some_commands.outputs.error_logs || 'No error logs available' }}

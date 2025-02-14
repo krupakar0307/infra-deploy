@@ -20,6 +20,7 @@ jobs:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
           channel: '#github-actions-workflows'
+          SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK_URL }}
         if: always()
 
      

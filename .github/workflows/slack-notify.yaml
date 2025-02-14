@@ -17,7 +17,7 @@ jobs:
       - name: Slack Notifications
         uses: act10ns/slack@v1
         with:
-          webhook-url: "https://hooks.slack.com/services/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"
+          webhook-url: "https://hooks.slack.com/services/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"
           status: in progress
           channel: '#general'
       

@@ -20,7 +20,7 @@ jobs:
         uses: slackapi/slack-github-action@v1.23.0
         
         with:
-            webhook-type: webhook-trigger
+            # webhook-type: webhook-trigger
             webhook: "https://hooks.slack.com/services/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"
             # webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
             payload: |

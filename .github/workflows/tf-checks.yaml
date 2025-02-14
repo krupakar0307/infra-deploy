@@ -18,6 +18,9 @@ permissions:
 jobs:
     call-workflow:
       uses: krupakar0307/infra-deploy/.github/workflows/slack.yml@set-cache
+      with:
+            status: "In Progress"
+            custom-message: "SAM Build has started."
     sam-build:
       runs-on: ubuntu-latest
       steps:
@@ -26,11 +29,10 @@ jobs:
           
         - name: Set up Python
           uses: actions/setup-python@v4
-        - name: notify-slack
-          uses: krupakar0307/infra-deploy/.github/workflows/slack.yml@set-cache
-          with:
-            status: "In Progress"
-            custom-message: "SAM Build has started."
+
+        # - name: notify-slack
+        #   uses: krupakar0307/infra-deploy/.github/workflows/slack.yml@set-cache
+          
         - name: setup sam
           uses: aws-actions/setup-sam@v2
         - run: |

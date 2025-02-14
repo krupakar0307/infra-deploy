@@ -21,5 +21,7 @@ jobs:
             webhook-type: incoming-webhook
             payload: |
                 text: "Greetings!"
+        env:
+            SLACK_CHANNEL_ID: "#general"
 
      

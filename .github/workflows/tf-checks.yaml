@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      # - set-*
+      - set-*
   pull_request:
 
 env:
@@ -29,7 +29,7 @@ jobs:
           with:
             status: "In Progress"
             custom-message: "SAM Build has started."
-            
+
         - name: setup sam
           uses: aws-actions/setup-sam@v2
         - run: |

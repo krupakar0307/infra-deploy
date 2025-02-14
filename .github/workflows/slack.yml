@@ -14,21 +14,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: notify slack
+      - name: Greet the reader
         uses: slackapi/slack-github-action@v2.0.0
         with:
-          status: ${{ job.status }}
-          author_name: ${{ github.actor }}
-          author_link:  ${{ github.event.sender.html_url }}
-          author_icon: ${{ github.actor }}
-          title: ${{ github.event_name }}
-          title_link: ${{ github.event.repository.html_url }}
-          text: ${{ github.event.repository.full_name }}
-          fields: repo=${{ github.event.repository.name }}, branch=${{ github.ref }}
-          color: good
-          channel: '#github-actions-workflows'
-          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: always()
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+          webhook-type: incoming-webhook
+          payload: |
+            text: "Greetings!"
       # - name: Notify Slack
       #   uses: act10ns/slack@v1
       #   with:

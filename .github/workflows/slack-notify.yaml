@@ -22,6 +22,6 @@ jobs:
             payload: |
                 text: "Greetings!"
         env:
-            SLACK_CHANNEL_ID: "#general"
+            SLACK_CHANNEL_ID: "#github-actions-workflows"
 
      

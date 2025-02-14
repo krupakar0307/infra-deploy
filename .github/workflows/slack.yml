@@ -14,28 +14,53 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Greet the reader
+
+      - name: Notify build start
         uses: slackapi/slack-github-action@v2.0.0
         with:
           webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
           webhook-type: incoming-webhook
           payload: |
-            text: "GitHub Action build starts: In Progress\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+            text: |
+              GitHub Action build starts: In Progress
+              Repository: ${{ github.repository }}
+              Commit: ${{ github.event.head_commit.message }}
+              Author: ${{ github.event.head_commit.author.name }}
+              Branch: ${{ github.ref }}
+              URL: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}
                   
-      - name: run some commands
+      - name: Run some commands
         run: |
           echo "Hello, world!"
           echo "The time is $(date)."
           sleep 30
-      - name: Notify Slack
+
+      - name: Notify build success
+        if: success()
         uses: slackapi/slack-github-action@v2.0.0
         with:
           webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
           webhook-type: incoming-webhook
           payload: |
-            if fails
-              text: "GitHub Action build failed\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
-            else
-              text: "GitHub Action build succeeded\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+            text: |
+              GitHub Action build succeeded
+              Repository: ${{ github.repository }}
+              Commit: ${{ github.event.head_commit.message }}
+              Author: ${{ github.event.head_commit.author.name }}
+              Branch: ${{ github.ref }}
+              URL: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}
 
-        
+      - name: Notify build failure
+        if: failure()
+        uses: slackapi/slack-github-action@v2.0.0
+        with:
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+          webhook-type: incoming-webhook
+          payload: |
+            text: |
+              GitHub Action build failed
+              Repository: ${{ github.repository }}
+              Commit: ${{ github.event.head_commit.message }}
+              Author: ${{ github.event.head_commit.author.name }}
+              Branch: ${{ github.ref }}
+              URL: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}

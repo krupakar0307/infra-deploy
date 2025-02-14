@@ -5,8 +5,8 @@ on:
     branches:
       - set-*
 
-env:
-  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+# env:
+#   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
 jobs:
   notify:
@@ -17,7 +17,7 @@ jobs:
       - name: Slack Notifications
         uses: act10ns/slack@v1
         with:
-          webhook-url: ${{ env.SLACK_WEBHOOK_URL }}
+          webhook-url: "https://hooks.slack.com/services/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"
           status: in progress
           channel: '#general'
       

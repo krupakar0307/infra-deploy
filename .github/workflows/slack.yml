@@ -20,14 +20,29 @@ jobs:
           webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
           webhook-type: incoming-webhook
           payload: |
-            text: "Greetings!"
-      # - name: Notify Slack
-      #   uses: act10ns/slack@v1
-      #   with:
-      #     status: ${{ job.status }}
-      #     steps: ${{ toJson(steps) }}
-      #     channel: '#githubactions-workflows'
-      #     SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK_URL }}
-      #   if: always()
-
-     
+            text: "Build started :eyes:"
+            attachments:
+              - color: "dbab09"
+                fields:
+                  - title: "Status"
+                    short: true
+                    value: "In Progress"
+      - name: run some commands
+        run: |
+          echo "Hello, world!"
+          echo "The time is $(date)."
+          sleep 30
+      - name: Notify Slack
+        uses: slackapi/slack-github-action@v2.0.0
+        with:
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+          webhook-type: incoming-webhook
+          payload: |
+            text: "Build completed :tada:"
+            attachments:
+              - color: "good"
+                fields:
+                  - title: "Status"
+                    short: true
+                    value: "Failed"
+        

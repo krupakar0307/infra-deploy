@@ -20,6 +20,6 @@ jobs:
             webhook: "https://hooks.slack.com/services/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"
             webhook-type: incoming-webhook
             payload: |
-            text: "Greetings!"
+                text: "Greetings!"
 
      

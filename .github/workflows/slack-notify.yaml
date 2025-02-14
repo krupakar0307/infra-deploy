@@ -5,8 +5,8 @@ on:
     branches:
       - set-*
 
-# env:
-#   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+env:
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
 jobs:
   notify:
@@ -14,14 +14,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Greet the reader
-        uses: slackapi/slack-github-action@v2.0.0
+      - name: Notify Slack
+        uses: act10ns/slack-notify@v1
         with:
-            webhook: "https://hooks.slack.com/services/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"
-            webhook-type: incoming-webhook
-            payload: |
-                text: "Greetings!"
-        env:
-            SLACK_CHANNEL_ID: "#github-actions-workflows"
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: '#github-actions-workflows'
+        if: always()
 
      

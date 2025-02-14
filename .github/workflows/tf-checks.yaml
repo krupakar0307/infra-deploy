@@ -22,7 +22,7 @@ jobs:
         - name: Checkout repository
           uses: actions/checkout@v4
         - name: Notify Build Start
-          uses: ./.github/workflows/slack.yml@set-cache
+          uses: .github/workflows/slack.yml@set-cache
           with:
             status: "In Progress"
             custom-message: "SAM Build has started."

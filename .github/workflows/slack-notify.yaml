@@ -1,97 +1,92 @@
 name: Slack Notification
 
 on:
-    push:
-        branches:
-            - set-*
-    # pull_request:
-    #     branches:
-    #         - main
+  push:
+    branches:
+      - set-*
+
+env:
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
 jobs:
-    notify:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v3
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-            - name: Notify Slack on success
-              if: success()
-              uses: slackapi/slack-github-action@v1.23.0
-              with:
-                payload: |
+      - name: Notify Slack on success
+        if: success()
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          webhook: "https://hooks.slack.com/services/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"
+          payload: |
+            {
+              "channel": "#github-actions-workflows",
+              "attachments": [
+                {
+                  "color": "good",
+                  "title": "Job Succeeded",
+                  "fields": [
                     {
-                        "channel": "#github-actions-workflows",
-                        "attachments": [
-                            {
-                                "color": "good",
-                                "title": "Job Succeeded",
-                                "fields": [
-                                    {
-                                        "title": "Repository",
-                                        "value": "${{ github.repository }}",
-                                        "short": true
-                                    },
-                                    {
-                                        "title": "Commit",
-                                        "value": "${{ github.sha }}",
-                                        "short": true
-                                    },
-                                    {
-                                        "title": "Author",
-                                        "value": "${{ github.actor }}",
-                                        "short": true
-                                    },
-                                    {
-                                        "title": "Event Name",
-                                        "value": "${{ github.event_name }}",
-                                        "short": true
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                env:
-                    SLACK_BOT_TOKEN: "https://hooks.slack.com/services/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"
-
-            - name: Notify Slack on failure
-              if: failure()
-              uses: slackapi/slack-github-action@v1.23.0
-              with:
-                payload: |
+                      "title": "Repository",
+                      "value": "${{ github.repository }}",
+                      "short": true
+                    },
                     {
-                        "channel": "#your-channel",
-                        "attachments": [
-                            {
-                                "color": "danger",
-                                "title": "Job Failed",
-                                "fields": [
-                                    {
-                                        "title": "Repository",
-                                        "value": "${{ github.repository }}",
-                                        "short": true
-                                    },
-                                    {
-                                        "title": "Commit",
-                                        "value": "${{ github.sha }}",
-                                        "short": true
-                                    },
-                                    {
-                                        "title": "Author",
-                                        "value": "${{ github.actor }}",
-                                        "short": true
-                                    },
-                                    {
-                                        "title": "Event Name",
-                                        "value": "${{ github.event_name }}",
-                                        "short": true
-                                    }
-                                ]
-                            }
-                        ]
+                      "title": "Commit",
+                      "value": "${{ github.sha }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Author",
+                      "value": "${{ github.actor }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Event Name",
+                      "value": "${{ github.event_name }}",
+                      "short": true
                     }
-                env:
-                    SLACK_BOT_TOKEN: "https://hooks.slack.com/services/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"
+                  ]
+                }
+              ]
+            }
 
-
-                    
+      - name: Notify Slack on failure
+        if: failure()
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          webhook: "https://hooks.slack.com/services/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"
+          payload: |
+            {
+              "channel": "#github-actions-workflows",
+              "attachments": [
+                {
+                  "color": "danger",
+                  "title": "Job Failed",
+                  "fields": [
+                    {
+                      "title": "Repository",
+                      "value": "${{ github.repository }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Commit",
+                      "value": "${{ github.sha }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Author",
+                      "value": "${{ github.actor }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Event Name",
+                      "value": "${{ github.event_name }}",
+                      "short": true
+                    }
+                  ]
+                }
+              ]
+            }

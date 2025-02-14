@@ -24,7 +24,7 @@ jobs:
         - name: Set up Python
           uses: actions/setup-python@v4
         - name: Notify Slack
-          uses: ./.github/workflows/notify-slack.yml
+          uses: ./.github/workflows/slack-notify.yaml
           with:
             message: 'sam build is in progress'
         - name: setup sam

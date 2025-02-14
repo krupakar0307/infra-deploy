@@ -21,15 +21,14 @@ jobs:
       steps:
         - name: Checkout repository
           uses: actions/checkout@v4
-        - name: Set up Python
-          uses: actions/setup-python@v4
-      
         - name: Notify Build Start
           uses: ./.github/workflows/slack.yml@set-cache
           with:
             status: "In Progress"
             custom-message: "SAM Build has started."
-
+        - name: Set up Python
+          uses: actions/setup-python@v4
+      
         - name: setup sam
           uses: aws-actions/setup-sam@v2
         - run: |

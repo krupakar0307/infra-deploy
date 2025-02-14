@@ -20,13 +20,7 @@ jobs:
           webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
           webhook-type: incoming-webhook
           payload: |
-            text: "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
-            attachments:
-              - color: "dbab09"
-                fields:
-                  - title: "Status"
-                    short: true
-                    value: ${{ job.status }}
+            text: "GitHub Action build starts: In Progress\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
                   
       - name: run some commands
         run: |
@@ -39,12 +33,9 @@ jobs:
           webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
           webhook-type: incoming-webhook
           payload: |
-            text: "Build completed :tada:"
-            attachments:
-              - color: "good"
-                fields:
-                  - title: "Status"
-                    short: true
-                    value: ${{ job.status }}
+            if fails
+              text: "GitHub Action build failed\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+            else
+              text: "GitHub Action build succeeded\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
 
         

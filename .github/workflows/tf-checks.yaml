@@ -124,6 +124,7 @@ jobs:
 
         - name: Install dependencies
           run: |
+              slee\p 10
               ls
               cd $GITHUB_WORKSPACE
               python -m pip install --upgrade pip

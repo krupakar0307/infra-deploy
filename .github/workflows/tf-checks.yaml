@@ -112,7 +112,7 @@ jobs:
     #             tfsec . --run-statistics
     service-build:
       # needs: tfsec
-      runs-on: ubuntu-latest
+      runsss-on: ubuntu-latest
       steps:
         - name: Checkout repository
           uses: actions/checkout@v4

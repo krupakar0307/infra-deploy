@@ -1,4 +1,4 @@
-name: terraform build and deployments
+name: terraform build and deployment
 
 on: 
   push:

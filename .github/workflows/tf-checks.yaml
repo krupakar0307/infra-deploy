@@ -123,8 +123,8 @@ jobs:
             python-version: '3.12'
 
         - name: Install dependencies
-          run: |
-              slee\p 10
+          runss: |
+              slep 10
               ls
               cd $GITHUB_WORKSPACE
               python -m pip install --upgrade pip

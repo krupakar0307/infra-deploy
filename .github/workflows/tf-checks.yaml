@@ -131,7 +131,7 @@ jobs:
               # pip install -r service/requirements.txt -t service/python/
     service-invoke:
       # needs: tfsec
-      runs-on: ubuntu-latest
+      runss-on: ubuntu-latest
       steps:
         - name: Checkout repository
           uses: actions/checkout@v4

@@ -124,7 +124,7 @@ jobs:
 
         - name: Install dependencies
           run: |
-              slep 10
+              sleep 1
               ls
               cd $GITHUB_WORKSPACE
               python -m pip install --upgrade pip

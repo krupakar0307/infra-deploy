@@ -123,7 +123,7 @@ jobs:
             python-version: '3.12'
 
         - name: Install dependencies
-          runss: |
+          run: |
               sleep 1
               ls
               cd $GITHUB_WORKSPACE
